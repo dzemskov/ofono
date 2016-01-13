@@ -944,7 +944,8 @@ static DBusMessage *pri_set_apn(struct pri_context *ctx, DBusConnection *conn,
 	if (g_str_equal(apn, ctx->context.apn))
 		return dbus_message_new_method_return(msg);
 
-	if (is_valid_apn(apn) == FALSE)
+	// Allow empty APN
+	if (apn[0] != '\0' && is_valid_apn(apn) == FALSE)
 		return __ofono_error_invalid_format(msg);
 
 	strcpy(ctx->context.apn, apn);
